@@ -1,0 +1,70 @@
+{
+    "subscribed": false,
+    "returnValue": true,
+    "devices": [
+        {
+            "deviceUri": "/tmp/usb/sda",
+            "subDevices": [
+                {
+                    "deviceUri": "/tmp/usb/sda/sda1",
+                    "deviceName": "A:",
+                    "deviceId": "373038354332323235333633314134313139363030314443_1",
+                    "fileSystem": "tfat",
+                    "volumeLabel": "KINGSTON",
+                    "lgSmartTvUri": "/tmp/usb/sda/sda1/LG Smart TV",
+                    "isMounted": true,
+                    "performanceTest": [
+                        {
+                            "requestType": "",
+                            "result": "unchecked"
+                        }
+                    ],
+                    "readOnly": false
+                }
+            ],
+            "deviceId": "USB_373038354332323235333633314134313139363030314443",
+            "deviceStatus": "NORMAL",
+            "deviceName": "DataTraveler 3.0",
+            "physicalType": "FLASH",
+            "deviceNum": 3,
+            "transferProtocol": "USB_STORAGE",
+            "vendorName": "Kingston Technology",
+            "deviceType": "usb",
+            "productName": "DataTraveler 3.0",
+            "devSpeed": "HIGH",
+            "portNum": 1
+        },
+        {
+            "deviceUri": "0",
+            "deviceName": "DESKTOP-DTD9ESJ: tomek:",
+            "deviceId": "098ea640-1e9e-4781-9669-6d1b276d3f43",
+            "modelDescription": "",
+            "ipAddress": "192.168.1.133",
+            "manufacturer": "Microsoft Corporation",
+            "thumbnailUri": "http://192.168.1.133:2869/upnphost/udhisapi.dll?content=uuid:fc570231-a8fa-483b-9def-4ff96d6b6c17",
+            "deviceType": "dms"
+        },
+        {
+            "deviceUri": "0",
+            "deviceName": "z230: minidlna",
+            "deviceId": "4d696e69-444c-164e-9d41-ecb1d738dd2b",
+            "modelDescription": "MiniDLNA on Linux",
+            "ipAddress": "192.168.1.187",
+            "manufacturer": "Justin Maggard",
+            "thumbnailUri": "http://192.168.1.187:8200/icons/lrg.png",
+            "deviceType": "dms"
+        },
+        {
+            "deviceId": "INTERNAL_STORAGE_CAMERA",
+            "deviceUri": "/mnt/lg/appstore/cam",
+            "deviceType": "internal camera",
+            "deviceName": "CAMERA_INTERNAL STORAGE"
+        },
+        {
+            "deviceId": "INTERNAL_STORAGE_SAMPLES",
+            "deviceUri": "/usr/palm/applications/com.webos.app.mediadiscovery/assets/samples",
+            "deviceType": "internal samples",
+            "deviceName": "SAMPLE INTERNAL STORAGE"
+        }
+    ]
+}

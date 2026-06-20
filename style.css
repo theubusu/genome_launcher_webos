@@ -1,0 +1,220 @@
+@font-face {
+    font-family: SSTDTV;
+    src: url(assets/font/SSTDTV-Roman_20140904.ttf);
+}
+
+@font-face {
+    font-family: SSTDTV-Light;
+    src: url(assets/font/SSTDTV-Light_20140904.ttf);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    font-family: SSTDTV;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    overflow: hidden;
+
+
+    /* background-image: url('assets/bg.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* hide ugly scrollbars (chrome is used in webos)*/
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+@keyframes opacity {
+    0% {opacity: 0%;}
+    100% {opacity:70%}
+}
+
+#cover{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 70%;
+    z-index: -1;
+    animation-name: opacity;
+    animation-duration: 0.5s;
+}
+
+@keyframes scale {
+    0% {scale: 1.2; opacity: 0%;}
+    100% {scale: 1; opacity:100%}
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 170px;
+    animation-name: scale;
+    animation-duration: 0.5s;
+    z-index: 1;
+}
+
+.category {
+    color: #ffffff9a;
+    font-size: 52px;
+    padding: 5px 10px;
+    font-family: SSTDTV-Light;
+}
+
+.category.selected {
+    color: white;
+    font-size: 56px;
+    font-family: SSTDTV;
+}
+
+.item-row {
+    display: flex;
+    width: calc(100vw - 202px); /* ?? */
+    height: 250px;
+    gap: 10px;
+    margin: 0 0 0 12px;
+    background-color: rgba(0, 0, 0, 0.33);
+    padding: 10px;
+
+    /* this is temp */
+    scrollbar-width: none;
+    overflow-x: auto; 
+}
+
+/* for item icon */
+@keyframes appear_down {
+    from {transform: rotateX(-90deg);}
+    to {transform: rotateX(0deg);}
+}
+
+@keyframes appear_up {
+    from {transform: rotateX(90deg);}
+    to {transform: rotateX(0deg);}
+}
+
+/* for item label */
+@keyframes show {
+    0% {opacity: 0;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+/* so borders dont show before item appears */
+@keyframes border {
+    0% {border-color: rgba(50, 50, 50, 0);}
+    99% {border-color: rgba(50, 50, 50, 0);}
+    100% {border-color: rgb(50, 50, 50);}
+}
+
+.item {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    perspective: 1000px;
+    border: 2px solid #323232;
+}
+
+.item.anim {
+    animation-name: border;
+    animation-duration: 0.5s;
+}
+
+@keyframes focus {
+    from {box-shadow: 0px 0px 10px 5px rgba(34, 184, 184, 0);}
+    to {box-shadow: 0px 0px 10px 5px rgba(34, 184, 184, 1);}
+}
+  
+.item.selected {
+    box-shadow: 0px 0px 10px 5px rgba(34, 184, 184, 1);
+    border: 2px solid rgb(255, 255, 255);
+    animation-name: focus;
+    animation-duration: 0.2s;
+}
+
+.item-icon {
+    width: 250px;
+    height: 250px;
+}
+
+.item-icon.anim_down {
+    animation-name: appear_down;
+    animation-duration: 0.5s
+}
+
+.item-icon.anim_up {
+    animation-name: appear_up;
+    animation-duration: 0.5s
+}
+
+/* single label */
+
+.item-label-single {
+    height: 50px;
+    width: 250px;
+    font-size: 26px;
+    position: absolute;
+    font-family: SSTDTV;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    overflow: hidden;
+}
+
+.item-label-single.anim {
+    animation-name: show;
+    animation-duration: 0.5s;
+}
+
+.item-label-single p {
+    margin-top: 8px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* double label */
+
+.item-label-double {
+    height: 90px;
+    width: 250px;
+    font-size: 26px;
+    position: absolute;
+    font-family: SSTDTV;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    overflow: hidden;
+}
+
+.item-label-double.anim {
+    animation-name: show;
+    animation-duration: 0.5s;
+}
+
+.item-label-double p {
+    margin-top: 8px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* none label */
+
+.item-label-none {
+    display: none;
+}

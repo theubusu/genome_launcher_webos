@@ -1,0 +1,11 @@
+{
+  "id": "xyz.theubusu.launcher",
+  "version": "1.0.0",
+  "vendor": "theubusu",
+  "type": "web",
+  "main": "index.html",
+  "title": "launcher",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "defaultWindowType": "overlay"
+}

@@ -1,0 +1,133 @@
+@font-face {
+    font-family: SSTDTV;
+    src: url(../assets/font/SSTDTV-Roman_20140904.ttf);
+}
+
+@font-face {
+    font-family: SSTDTV-Light;
+    src: url(../assets/font/SSTDTV-Light_20140904.ttf);
+}
+
+body {
+    margin: 0;
+    font-family: SSTDTV;
+    font-family: sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+
+    /* background-image: url('../assets/bg.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@keyframes opacity {
+    0% {opacity: 0%;}
+    100% {opacity:70%}
+}
+
+#cover{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 70%;
+    z-index: -1;
+    animation-name: opacity;
+    animation-duration: 1s;
+}
+
+@keyframes scale {
+    0% {scale: 0.5; opacity: 0%;}
+    100% {scale: 1; opacity:100%}
+}
+
+#main{
+    animation-name: scale;
+    animation-duration: 1s;
+    z-index: 1;
+}
+
+#header{
+    height: 242px;
+    width: 1600px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: SSTDTV-Light;
+    font-size: 26px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(6, 250px);
+    grid-template-rows: repeat(3, 250px);
+    gap: 20px;
+    width: 1600px;
+    height: 838px;
+}
+
+/* for item icon */
+@keyframes appear {
+    from {transform: rotateX(95deg); opacity: 0%;}
+    to {transform: rotateX(0deg); opacity:100%}
+}
+
+/* so borders dont show before item appears */
+@keyframes border {
+    0% {border-color: rgba(50, 50, 50, 0);}
+    99% {border-color: rgba(50, 50, 50, 0);}
+    100% {border-color: rgb(50, 50, 50);}
+}
+
+.item {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    perspective: 1000px;
+    border: 2px solid #323232;
+    animation-name: border;
+    animation-duration: 1s;
+}
+
+.item.selected {
+    box-shadow: 0px 0px 10px 5px rgba(34, 184, 184, 1);
+    transition: box-shadow 0.2s;
+    border: 2px solid #ffffff;
+}
+
+.item img{
+    animation-name: appear;
+    animation-duration: 0.8s;
+}
+
+.item-label {
+    display: none;
+}
+
+.item-label.selected {
+    display: block;
+    height: 50px;
+    width: 250px;
+    font-size: 26px;
+    position: absolute;
+    font-family: SSTDTV;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    overflow: hidden;
+}
+
+.item-label p {
+    margin-top: 8px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+

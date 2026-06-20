@@ -1,0 +1,83 @@
+{
+    "arcDevicePower": 255,
+    "returnValue": true,
+    "arcDevice": false,
+    "devices": [
+        {
+            "connected": true,
+            "subCount": 0,
+            "iconPrefix": "/usr/palm/plugins/inputapps/assets/small/",
+            "subList": [
+            ],
+            "lastUniqueId": -1,
+            "id": "HDMI_1",
+            "port": 1,
+            "modified": false,
+            "appId": "com.webos.app.hdmi1",
+            "label": "HDMI 1",
+            "activate": false,
+            "icon": "HDMI_1.png",
+            "forceIcon": false,
+            "chosen": false,
+            "hdmiPlugIn": true
+        },
+        {
+            "connected": true,
+            "subCount": 1,
+            "iconPrefix": "/usr/palm/plugins/inputapps/assets/small/",
+            "subList": [
+                {
+                    "settopCode": "incomplete",
+                    "ossSetupStatus": "complete",
+                    "connectedInput": "HDMI_2",
+                    "id": "URCU",
+                    "hasPowerKey": false,
+                    "serviceType": "game",
+                    "brandName": "PS3",
+                    "settopOption": "",
+                    "codeset": "N6033",
+                    "serviceName": "",
+                    "isMainSTB": false,
+                    "serviceArea": "",
+                    "labelName": "PS3",
+                    "detectedMethod": "auto_lookup",
+                    "priorityOverCEC": false
+                }
+            ],
+            "lastUniqueId": -1,
+            "id": "HDMI_2",
+            "port": 2,
+            "modified": false,
+            "appId": "com.webos.app.hdmi2",
+            "label": "PS3 Konsola do gier",
+            "activate": false,
+            "icon": "gameconsole.png",
+            "forceIcon": false,
+            "chosen": false,
+            "hdmiPlugIn": true
+        },
+        {
+            "connected": true,
+            "subCount": 0,
+            "iconPrefix": "/usr/palm/plugins/inputapps/assets/small/",
+            "subList": [
+            ],
+            "lastUniqueId": -1,
+            "id": "HDMI_3",
+            "port": 3,
+            "modified": false,
+            "appId": "com.webos.app.hdmi3",
+            "label": "HDMI 3",
+            "activate": false,
+            "icon": "HDMI_3.png",
+            "forceIcon": false,
+            "chosen": false,
+            "hdmiPlugIn": false
+        }
+    ],
+    "blockedAllInput": false,
+    "totalCount": 3,
+    "unknownCECPNumber": 0,
+    "atmosDevice": false,
+    "maxHdmiCount": 3
+}

@@ -1,0 +1,62 @@
+[
+    {
+      "title": "Applications",
+      "items": [
+        {  
+          "name": "Go back", 
+          "icon": "content/assets/icon_home.png", 
+          "action": "goBack"
+        },
+        { 
+          "name": "Video Unlimited", 
+          "icon": "content/assets/apps_icon_senvideo.png", 
+          "action": "sen_action1"
+        },
+        { 
+          "name": "Music Unlimited", 
+          "icon": "content/assets/apps_icon_senmusic.png", 
+          "action": "sen_action1"
+        },
+        { 
+          "name": "PlayMemories Online", 
+          "icon": "content/assets/apps_icon_senphoto.png", 
+          "action": "sen_action1"
+        },
+        { 
+          "name": "Skype", 
+          "icon": "content/assets/apps_icon_skype.png", 
+          "action": "sen_action1"
+        },
+        { 
+          "name": "YouTube", 
+          "icon": "content/assets/apps_icon_youtube.png", 
+          "action": "sen_action1"
+        },
+        { 
+          "name": "Netflix", 
+          "icon": "content/assets/apps_icon_netflix.png", 
+          "action": "sen_action1"
+        },
+        { 
+          "name": "Internet Browser", 
+          "icon": "../content/assets/apps_icon_browser.png", 
+          "action": "sen_action1"
+        },
+        { 
+          "name": "Media Player", 
+          "icon": "../content/assets/apps_icon_mediaplayer.png", 
+          "action": "sen_action1"
+        },
+        { 
+          "name": "Guide", 
+          "icon": "../content/assets/apps_icon_guide.png", 
+          "action": "sen_action1"
+        },
+        { 
+          "name": "Picture Frame", 
+          "icon": "../content/assets/apps_icon_pictureframe.png", 
+          "action": "sen_action1"
+        }
+      ]
+    }
+]
