@@ -83,6 +83,9 @@ async function appInit() {
 		createInputsDevices(inputResult, devicesResult);
     }
 
+	//create settings
+	createSettings();
+
 	renderMenu();
 }
 
@@ -155,6 +158,63 @@ function createInputsDevices(inputResult, devicesResult) {
 	})
 }
 
+//create preset settings
+function createSettings() {
+	MENU_DATA.push({
+		"category": "Settings",
+		"items": [
+			{ 
+				"name": "i-Manual", 
+				"icon": "assets/common_icon_help.png", 
+				"action": "launch com.webos.app.tvuserguide", 
+				"type": "single" 
+			},
+			{ 
+				"name": "Display", 
+				"icon": "assets/settings_icon_picture.png", 
+				"action": "settings picture", 
+				"type": "single" 
+			},
+			{ 
+				"name": "Sound", 
+				"icon": "assets/settings_icon_sound.png", 
+				"action": "settings sound", 
+				"type": "single" 
+			},
+			{ 
+				"name": "System Settings", 
+				"icon": "assets/settings_icon_general.png", 
+				"action": "settings general", 
+				"type": "single" 
+			},
+			{ 
+				"name": "Channels", 
+				"icon": "assets/settings_icon_broadcasting.png", 
+				"action": "settings channel", 
+				"type": "single" 
+			},
+			{ 
+				"name": "External Inputs", 
+				"icon": "assets/settings_icon_inputs.png", 
+				"action": "none", 	//?
+				"type": "single" 
+			},
+			{
+				"name": "Network", 
+				"icon": "assets/settings_icon_internet.png", 
+				"action": "settings network", 
+				"type": "single" 
+			},
+			{
+				"name": "Product Support", 
+				"icon": "assets/settings_icon_productsupport.png", 
+				"action": "settings support", 
+				"type": "single" 
+			}
+		]
+	})
+}
+
 function handleAction(action) {
 	//launch app
 	if (action.startsWith("launch")) {
@@ -171,6 +231,21 @@ function handleAction(action) {
 		var bridge = new window.PalmServiceBridge();
 		bridge.call('luna://com.webos.service.applicationManager/launch', JSON.stringify({id: "com.webos.app.mediadiscovery", params: {requestDevice: deviceId}}));
 	}
+
+	//launch settings with specific category
+	if (action.startsWith("settings")) {
+		let settingsTarget = action.slice(9);
+		console.log(`[settings] launcing settings with target: ${settingsTarget}`);
+		var bridge = new window.PalmServiceBridge();
+		bridge.call('luna://com.webos.service.applicationManager/launch', JSON.stringify({id: "com.palm.app.settings", params: {target: settingsTarget}}));
+	}
+
+	//close app, (if you open the app ur already in it wont close for some reason, this is to prevent that)
+	closeApp();
+}
+
+function closeApp() {
+	window.close();
 }
 
 appInit();
@@ -272,7 +347,7 @@ async function renderMenu() {
 
 document.addEventListener('keydown', e => {
 	const items = data[selectedCategory].items;
-	
+
 	if (e.key === 'ArrowDown') {
 		selectedCategory = (selectedCategory + 1) % data.length;
 		selectedItem = 0;
@@ -287,6 +362,8 @@ document.addEventListener('keydown', e => {
 		const action = data[selectedCategory].items[selectedItem].action;
 		console.log(`Action: ${action}`);
 		handleAction(action);
+	} else if (e.key === 'GoBack') {	//will not work by default on overlay
+		closeApp();	
 	}
 	
 	renderMenu();
