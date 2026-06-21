@@ -136,11 +136,87 @@ function createInputsDevices(inputResult, devicesResult) {
 	let items = [];
 
 	for (let device of inputResult.devices) {
-		console.log(`[input] label: ${device.label}, appID: ${device.appId}`);
+		console.log(`[input] label: ${device.label}, appID: ${device.appId}, icon: ${device.icon}`);
+
+		//map webos input icon to genome icon
+		let icon;
+		switch(device.icon) {
+			case "antenna.png":
+			case "satellite.png":
+			case "tv.png":
+				icon = "source_icon_tvtuner.png"
+				break;
+
+			case "appletv.png":
+			case "settopbox.png":
+			case "streamingbox.png":
+				icon = "source_icon_cablebox.png"
+				break;
+
+			case "hdmigeneric.png":
+			case "HDMI_1.png":
+			case "HDMI_2.png":
+			case "HDMI_3.png":
+			case "HDMI_4.png":
+			case "HDMI_sub.png":
+				icon = "source_icon_hdmi.png"
+				break;
+
+			case "dlna.png":
+			case "mediaServer.png":
+			case "pc.png":
+				icon = "source_icon_pc.png"
+				break;
+
+			case "bluray.png":
+			case "dvd.png":
+				icon = "source_icon_bddvd.png"
+				break;
+			
+			case "gameconsole.png":
+			case "ps3.png":
+			case "wii.png":
+			case "xbox.png":
+				icon = "source_icon_game.png"
+				break;
+
+			case "mobile.png":
+			case "screenshare.png":
+			case "smhl.png":
+				icon = "source_icon_mobile.png"
+				break;
+
+			case "av.png":
+				icon = "source_icon_video.png"
+				break;
+
+			case "camera.png":
+				icon = "source_icon_digitalcamera.png"
+				break;
+
+			case "component.png":
+				icon = "source_icon_component2.png"
+				break;
+
+			case "hometheater.png":
+				icon = "source_icon_hometheater.png"
+				break;
+
+			case "scart.png":
+				icon = "source_icon_scart.png"
+				break;
+
+			case "vcr.png":
+				icon = "source_icon_vcr.png"
+				break;
+
+			default:
+				icon = "source_icon_unknown.png"
+		}
 
 		items.push({
     		name: device.label,
-			icon: "assets/source_icon_hdmi.png",	//there is icon in the device spec, but it probably wouldnt match the style here
+			icon: `assets/${icon}`,
       		action: `launch ${device.appId}`,
       		type: "double"
     	});
