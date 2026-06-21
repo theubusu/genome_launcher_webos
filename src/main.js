@@ -94,12 +94,12 @@ function createApps(appsResult) {
 	let appItems = [];
 
 	//SEN app
-	//appItems.push({
-    //	name: "All apps",
-    //  	icon: 'assets/apps_icon_sen.png',
-    //  	action: `openSEN`,
-    //  	type: "single_select"
-    //});
+	appItems.push({
+    	name: "All apps",
+      	icon: 'assets/apps_icon_sen.png',
+      	action: `openSEN`,
+      	type: "single_select"
+    });
 
 	for (let app of appsResult.apps) {
 		//ignore non visible apps ( maybe can be changed?)
@@ -181,9 +181,12 @@ function createInputsDevices(inputResult, devicesResult) {
 				break;
 
 			case "mobile.png":
-			case "screenshare.png":
 			case "smhl.png":
 				icon = "source_icon_mobile.png"
+				break;
+
+			case "screenshare.png":
+				icon = "source_icon_wifidisplay.png"
 				break;
 
 			case "av.png":
@@ -339,7 +342,7 @@ function handleAction(action) {
 	}
 
 	//close app, (if you open the app ur already in it wont close for some reason, this is to prevent that)
-	if (!isDummy) {
+	if (!isDummy && action != "openSEN") {
 		closeApp();
 	}
 }

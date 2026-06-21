@@ -24,6 +24,11 @@ body {
     background-size: cover;
 }
 
+/* hide ugly scrollbars (chrome is used in webos)*/
+::-webkit-scrollbar {
+    display: none;
+}
+
 @keyframes opacity {
     0% {opacity: 0%;}
     100% {opacity:70%}
@@ -41,8 +46,8 @@ body {
 }
 
 @keyframes scale {
-    0% {scale: 0.5; opacity: 0%;}
-    100% {scale: 1; opacity:100%}
+    0% {transform: scale(0.5); opacity: 0%;}
+    100% {transform: scale(1); opacity:100%}
 }
 
 #main{
@@ -68,6 +73,14 @@ body {
     gap: 20px;
     width: 1600px;
     height: 838px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    grid-auto-rows: 250px;
+
+    /* for no animation clipping */
+    padding: 0 40px;
+    box-sizing: content-box;
+
 }
 
 /* for item icon */
@@ -100,6 +113,8 @@ body {
 }
 
 .item img{
+    width: 250px;
+    height: 250px;
     animation-name: appear;
     animation-duration: 0.8s;
 }
