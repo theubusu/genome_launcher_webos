@@ -31,9 +31,10 @@ function getLunaJsonHbChannel(lunaEndpoint) {
     });
 }
 
+let isDummy;
+
 async function appInit() {
 	// check if running on real device
-	var isDummy;
 	if (location.href.includes("palm/applications")) {
 		console.log("[+] real mode")
 		isDummy = false;
@@ -92,18 +93,33 @@ async function appInit() {
 function createApps(appsResult) {
 	let appItems = [];
 
+	//SEN app
+	//appItems.push({
+    //	name: "All apps",
+    //  	icon: 'assets/apps_icon_sen.png',
+    //  	action: `openSEN`,
+    //  	type: "single_select"
+    //});
+
 	for (let app of appsResult.apps) {
 		//ignore non visible apps ( maybe can be changed?)
 		if (!app.visible) {
 			continue
 		}
-
 		console.log(`[app] title: ${app.title}, id: ${app.id}, path: ${app.folderPath}, icon: ${app.icon}`);
+
+		let icon;
+		//use large icon if avaliable
+		if (app.largeIcon) {
+			console.log(`use large icon: ${app.largeIcon}`);
+			icon = app.largeIcon
+		} else {
+			icon = app.icon
+		}
 
 		appItems.push({
     		name: app.title,
-      		icon: `root/${app.folderPath}/${app.icon}`, //use the previously created root symlink
-			//icon: "assets/missing.png",
+      		icon: `root/${app.folderPath}/${icon}`, //use the previously created root symlink
       		action: `launch ${app.id}`,
       		type: "single_select"
     	});
@@ -140,7 +156,7 @@ function createInputsDevices(inputResult, devicesResult) {
 
 		} else {
 			//maybe set icon based on type, can be "usb", "dms", "internal*" (if i get the icons)
-			icon = "assets/missing.png"
+			icon = "assets/source_icon_unknown.png"
 		}
 
 		items.push({
@@ -240,8 +256,16 @@ function handleAction(action) {
 		bridge.call('luna://com.webos.service.applicationManager/launch', JSON.stringify({id: "com.palm.app.settings", params: {target: settingsTarget}}));
 	}
 
+	//open SEN menu
+	if (action == "openSEN") {
+		console.log("[openSEN] opening SEN menu")
+		document.location.href = "sen/index.html"
+	}
+
 	//close app, (if you open the app ur already in it wont close for some reason, this is to prevent that)
-	closeApp();
+	if (!isDummy) {
+		closeApp();
+	}
 }
 
 function closeApp() {
@@ -257,6 +281,11 @@ let data = MENU_DATA;
 let selectedCategory = 0;
 let lastCategory = 0;
 let selectedItem = 0;
+
+// 7 for 1080p
+const ITEMS_VISIBLE_ON_SCREEN = 7;
+//which slot is focused when moving off limit ( 5 is faithful to original)
+const FOCUS_SLOT = 5;
 
 const menu = document.getElementById('menu');
 
@@ -290,7 +319,15 @@ async function renderMenu() {
 				anim_dir = ""
 			}
 			
-			cat.items.forEach(async (item, j) => {
+			//render only visible items for optimization +using focus slot
+			const start = Math.max(0, selectedItem - FOCUS_SLOT);
+			const end = Math.min(cat.items.length, start + ITEMS_VISIBLE_ON_SCREEN);
+			const visibleItems = cat.items.slice(start, end);
+
+			visibleItems.forEach(async (item, localIdx) => {
+				//const j = selectedItem + localIdx;
+				const j = start + localIdx;
+
 				n++
 				const itemDiv = document.createElement('div');
 				if (item.type == "single"){
@@ -337,12 +374,6 @@ async function renderMenu() {
 		}
 	});
 	lastCategory = selectedCategory
-
-	// scroll to selected item
-	const selected = document.querySelector('.item.selected');
-    if (selected) {
-        selected.scrollIntoView({block: "nearest"});
-    }
 }
 
 document.addEventListener('keydown', e => {

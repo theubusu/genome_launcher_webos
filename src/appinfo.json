@@ -4,7 +4,7 @@
   "vendor": "theubusu",
   "type": "web",
   "main": "index.html",
-  "title": "launcher",
+  "title": "Genome Launcher",
   "icon": "icon.png",
   "largeIcon": "largeIcon.png",
   "defaultWindowType": "overlay",

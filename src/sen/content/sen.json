@@ -39,22 +39,22 @@
         },
         { 
           "name": "Internet Browser", 
-          "icon": "../content/assets/apps_icon_browser.png", 
+          "icon": "../assets/apps_icon_browser.png", 
           "action": "sen_action1"
         },
         { 
           "name": "Media Player", 
-          "icon": "../content/assets/apps_icon_mediaplayer.png", 
+          "icon": "../assets/apps_icon_mediaplayer.png", 
           "action": "sen_action1"
         },
         { 
           "name": "Guide", 
-          "icon": "../content/assets/apps_icon_guide.png", 
+          "icon": "../assets/apps_icon_guide.png", 
           "action": "sen_action1"
         },
         { 
           "name": "Picture Frame", 
-          "icon": "../content/assets/apps_icon_pictureframe.png", 
+          "icon": "../assets/apps_icon_pictureframe.png", 
           "action": "sen_action1"
         }
       ]
