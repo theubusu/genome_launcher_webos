@@ -43,6 +43,9 @@ async function appInit() {
 		isDummy = true;
 	};
 
+	//create tv section
+	createTv();
+
 	if (!isDummy) {
 		//make root symlink to get app icons (DIRTY HAX)
 		let bridge = new window.PalmServiceBridge();
@@ -310,6 +313,45 @@ function createSettings() {
 	})
 }
 
+//create preset tv section
+function createTv() {
+	MENU_DATA.push({
+		"category": "TV",
+		"items": [
+			{ 
+          		"name": "Recordings", 
+          		"icon": "assets/tv_icon_recordings.png", 
+          		"action": "livemenu recordings", 
+          		"type": "single" 
+        	},
+        	{ 
+          		"name": "Guide", 
+          		"icon": "assets/tv_icon_guide.png", 
+          		"action": "livemenu tvguide", 
+          		"type": "single" 
+        	},
+        	{ 
+          		"name": "TV Channel List", 
+          		"icon": "assets/tv_icon_channellist.png", 
+          		"action": "livemenu channels", 
+          		"type": "single" 
+        	},
+        	{ 
+          		"name": "Favourites", 
+          		"icon": "assets/tv_icon_favs.png", 
+          		"action": "livemenu channels", 	//not possible to open favourites menu directly
+          		"type": "single" 
+        	},
+        	{ 
+          		"name": "Adding Favourites", 
+          		"icon": "assets/common_icon_help.png", 
+          		"action": "launch com.webos.app.tvuserguide", 
+          		"type": "single" 
+        	}
+		]
+	})
+}
+
 function handleAction(action) {
 	//launch app
 	if (action.startsWith("launch")) {
@@ -335,6 +377,14 @@ function handleAction(action) {
 		bridge.call('luna://com.webos.service.applicationManager/launch', JSON.stringify({id: "com.palm.app.settings", params: {target: settingsTarget}}));
 	}
 
+	//launch livemenu with specific category
+	if (action.startsWith("livemenu")) {
+		let activateType = action.slice(9);
+		console.log(`[livemenu] launcing livemenu with target: ${activateType}`);
+		var bridge = new window.PalmServiceBridge();
+		bridge.call('luna://com.webos.service.applicationManager/launch', JSON.stringify({id: "com.webos.app.livemenu", params: {activateType: activateType}}));
+	}
+
 	//open SEN menu
 	if (action == "openSEN") {
 		console.log("[openSEN] opening SEN menu")
@@ -357,8 +407,10 @@ appInit();
 
 let data = MENU_DATA;
 
-let selectedCategory = 0;
-let lastCategory = 0;
+const DEFAULT_CATEGORY = 1;	//Applications
+
+let selectedCategory = DEFAULT_CATEGORY;
+let lastCategory = DEFAULT_CATEGORY;
 let selectedItem = 0;
 
 // 7 for 1080p
