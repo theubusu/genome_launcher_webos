@@ -78,10 +78,18 @@ function createApps(appsResult) {
 		} else {
 			icon = app.icon
 		}
+
+		//use app icon color if avaliable
+		let iconColor = null;
+		if (app.iconColor) {
+			console.log(`use icon color: ${app.iconColor}`);
+			iconColor = app.iconColor
+		}
 		
 		appItems.push({
 			name: app.title,
 			icon: `../root/${app.folderPath}/${icon}`, //use the previously created root symlink
+			iconColor: iconColor,
 			action: `launch ${app.id}`,
 		});
 		
@@ -128,9 +136,15 @@ async function renderMenu() {
  
 	const appendPromises = items.map((item, n) => {
 		const div = document.createElement('div');
+		let styleText = "";
+		if (item.iconColor) {
+			//use icon color
+			styleText = `background-color: ${item.iconColor}`
+		}
+
 		div.className = 'item';
 		div.innerHTML = `
-				<img src="${item.icon}" alt="${item.name}">
+				<img src="${item.icon}" alt="${item.name}" style="${styleText}">
 				<div class="item-label"><p>${item.name}</p></div>
 				`;
 		div.dataset.action = item.action;

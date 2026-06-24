@@ -43,28 +43,45 @@ async function appInit() {
 		isDummy = true;
 	};
 
-	//create tv section
-	createTv();
-
 	if (!isDummy) {
 		//make root symlink to get app icons (DIRTY HAX)
 		let bridge = new window.PalmServiceBridge();
 		bridge.call('luna://org.webosbrew.hbchannel.service/exec', JSON.stringify({command: `ln -s / ${APP_PATH}/root`}));
 	}
 
-	//create apps
-    if (!isDummy) {
-        try {
-            let appsResult = await getLunaJsonHbChannel("luna://com.webos.applicationManager/listApps");
-            createApps(appsResult);
+	//get apps list
+	let appsResult;
+	if (!isDummy) {
+		try {
+            appsResult = await getLunaJsonHbChannel("luna://com.webos.applicationManager/listApps");
         } catch(e) {
             console.error("failed to get apps list:", e);
         }
-    } else {
-        await fetch('dummy/listApps.json')
+	} else {
+		await fetch('dummy/listApps.json')
         	.then(r => r.json())
-        	.then(json => createApps(json));
-    }
+        	.then(json => appsResult = json);
+	}
+
+	//create history section
+	if (!isDummy) {
+		try {
+            let recentsResult = await getLunaJsonHbChannel("luna://com.webos.service.recent/listRecents");
+			createHistory(recentsResult, appsResult);
+        } catch(e) {
+            console.error("failed to get recents list:", e);
+        }
+	} else {
+		await fetch('dummy/listRecents.json')
+        	.then(r => r.json())
+        	.then(json => createHistory(json, appsResult));
+	}
+
+	//create tv section
+	createTv();
+
+	//create apps
+    createApps(appsResult);
 
 	//create inputs and devices
     if (!isDummy) {
@@ -120,9 +137,17 @@ function createApps(appsResult) {
 			icon = app.icon
 		}
 
+		//use app icon color if avaliable
+		let iconColor = null;
+		if (app.iconColor) {
+			console.log(`use icon color: ${app.iconColor}`);
+			iconColor = app.iconColor
+		}
+
 		appItems.push({
     		name: app.title,
       		icon: `root/${app.folderPath}/${icon}`, //use the previously created root symlink
+			iconColor: iconColor,
       		action: `launch ${app.id}`,
       		type: "single_select"
     	});
@@ -352,6 +377,48 @@ function createTv() {
 	})
 }
 
+function createHistory(recentsResult, appsResult) {
+	let items = [];
+
+	for (let recentItem of recentsResult.recentsAppList) {
+		console.log(`[recent] title: ${recentItem.title} appId: ${recentItem.appId}`)
+
+		//find app entry to get icon (there is splash in recents but it is not appropiate)
+		const appItem = appsResult.apps.find(item => item.id === recentItem.appId);
+
+		let icon;
+		//use large icon if avaliable
+		if (appItem.largeIcon) {
+			console.log(`use large icon: ${appItem.largeIcon}`);
+			icon = appItem.largeIcon
+		} else {
+			console.log(`use normal icon: ${appItem.icon}`);
+			icon = appItem.icon
+		}
+
+		//use app icon color if avaliable
+		let iconColor = null;
+		if (appItem.iconColor) {
+			console.log(`use icon color: ${appItem.iconColor}`);
+			iconColor = appItem.iconColor
+		}
+
+		items.push({
+    		name: recentItem.title,
+      		icon: `root/${appItem.folderPath}/${icon}`, //use the previously created root symlink
+			iconColor: iconColor,
+      		action: `launch ${recentItem.appId}`,
+      		type: "single_select"
+    	});
+
+	}
+
+	MENU_DATA.push({
+		category: "History",
+		items: items,
+	})
+}
+
 function handleAction(action) {
 	//launch app
 	if (action.startsWith("launch")) {
@@ -407,7 +474,7 @@ appInit();
 
 let data = MENU_DATA;
 
-const DEFAULT_CATEGORY = 1;	//Applications
+const DEFAULT_CATEGORY = 2;	//Applications
 
 let selectedCategory = DEFAULT_CATEGORY;
 let lastCategory = DEFAULT_CATEGORY;
@@ -461,16 +528,22 @@ async function renderMenu() {
 
 				n++
 				const itemDiv = document.createElement('div');
+				let styleText = "";
+				if (item.iconColor) {
+					//use icon color
+					styleText = `background-color: ${item.iconColor}`
+				}
+
 				if (item.type == "single"){
 					// for single line label
 					itemDiv.innerHTML = `
-                <img src="${item.icon}" alt="${item.name}" class="item-icon ${anim_dir}">
+                <img src="${item.icon}" alt="${item.name}" class="item-icon ${anim_dir}" style="${styleText}">
                 <div class="item-label-single ${anim_class}"><p>${item.name}</p></div>
                 `;
 				} else if (item.type == "double"){
 					// for double line label
 					itemDiv.innerHTML = `
-                <img src="${item.icon}" alt="${item.name}" class="item-icon ${anim_dir}">
+                <img src="${item.icon}" alt="${item.name}" class="item-icon ${anim_dir}" style="${styleText}">
                 <div class="item-label-double ${anim_class}"><p>${item.name}</p></div>
                 `;
 				} else if (item.type == "single_select"){
@@ -478,13 +551,13 @@ async function renderMenu() {
 					if (j === selectedItem){
 						//show single if selected
 						itemDiv.innerHTML = `
-                    <img src="${item.icon}" alt="${item.name}" class="item-icon ${anim_dir}">
+                    <img src="${item.icon}" alt="${item.name}" class="item-icon ${anim_dir}" style="${styleText}">
                     <div class="item-label-single ${anim_class}"><p>${item.name}</p></div>
                     `;
 					} else {
 						// show none if not selected
 						itemDiv.innerHTML = `
-                    <img src="${item.icon}" alt="${item.name}" class="item-icon ${anim_dir}">
+                    <img src="${item.icon}" alt="${item.name}" class="item-icon ${anim_dir}" style="${styleText}">
                     <div class="item-label-none ${anim_class}"><p>${item.name}</p></div>
                     `;
 					}      

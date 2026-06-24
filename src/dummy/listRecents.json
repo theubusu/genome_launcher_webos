@@ -1,0 +1,37 @@
+{
+    "recentsAppList": [
+        {
+            "customImageFilePath": "",
+            "cardSnapShotFilePath": "",
+            "appId": "com.webos.app.hdmi2",
+            "subtitle": "",
+            "splashBackground": "/usr/palm/applications/com.webos.app.hdmi2/assets/HDMI-2_splash.png",
+            "title": "HDMI2"
+        },
+        {
+            "customImageFilePath": "",
+            "cardSnapShotFilePath": "",
+            "appId": "com.webos.app.mediadiscovery",
+            "subtitle": "",
+            "splashBackground": "/usr/palm/applications/com.webos.app.mediadiscovery/assets/hd1080/photovideo_splash.png",
+            "title": "Odtwarzacz multimedialny"
+        },
+        {
+            "customImageFilePath": "",
+            "cardSnapShotFilePath": "",
+            "appId": "org.xbmc.kodi",
+            "subtitle": "",
+            "splashBackground": "/media/developer/apps/usr/palm/applications/org.xbmc.kodi/media/applaunch_screen.png",
+            "title": "Kodi"
+        },
+        {
+            "customImageFilePath": "",
+            "cardSnapShotFilePath": "",
+            "appId": "ui30",
+            "subtitle": "",
+            "splashBackground": "/media/cryptofs/apps/usr/palm/applications/ui30/87471779501895321_default_splash.png",
+            "title": "Rakuten TV"
+        }
+    ],
+    "returnValue": true
+}
