@@ -192,6 +192,9 @@ function createInputsDevices(inputResult, devicesResult) {
 
 			case "dlna.png":
 			case "mediaServer.png":
+				icon = "source_icon_dlnanr.png"
+				break;
+
 			case "pc.png":
 				icon = "source_icon_pc.png"
 				break;
@@ -211,6 +214,11 @@ function createInputsDevices(inputResult, devicesResult) {
 			case "mobile.png":
 			case "smhl.png":
 				icon = "source_icon_mobile.png"
+				break;
+
+			case "usb.png":
+			case "usb-port.png":
+				icon = "source_icon_usb.png"
 				break;
 
 			case "screenshare.png":
@@ -262,8 +270,13 @@ function createInputsDevices(inputResult, devicesResult) {
 			icon = device.thumbnailUri;
 
 		} else {
-			//maybe set icon based on type, can be "usb", "dms", "internal*" (if i get the icons)
-			icon = "assets/source_icon_unknown.png"
+			if (device.deviceType == "usb") {
+				icon = "assets/source_icon_usb.png"
+			} else if (device.deviceType == "dms") {
+				icon = "assets/source_icon_dlnanr.png"
+			} else {
+				icon = "assets/source_icon_unknown.png"
+			}	
 		}
 
 		items.push({
